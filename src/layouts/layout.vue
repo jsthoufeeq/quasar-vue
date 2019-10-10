@@ -5,6 +5,13 @@
         <q-toolbar-title class="absolute-center">
           Quasar POC
         </q-toolbar-title>
+
+        <q-btn to="/auth" v-if="!loggedIn" color="white" icon-right="account_circle"
+         label="Login" class="absolute-right" flat />
+
+         <q-btn v-else @click="logoutUser" color="white" icon-right="account_circle"
+         label="Logout" class="absolute-right" flat />
+
       </q-toolbar>
     </q-header>
 
@@ -42,6 +49,7 @@
 
 <script>
 import { openURL } from 'quasar'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'MyLayout',
@@ -62,7 +70,11 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState('auth', ['loggedIn'])
+  },
   methods: {
+    ...mapActions('auth', ['logoutUser']),
     openURL
   }
 }

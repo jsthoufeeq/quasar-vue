@@ -21,7 +21,10 @@
 
 <script>
 import { mapActions } from 'vuex'
+import mixinTasks from 'src/mixins/mixin-tasks'
+
 export default {
+  mixins: [mixinTasks],
   data () {
     return {
       taskToBeAdded: {
@@ -34,27 +37,10 @@ export default {
   },
   methods: {
     ...mapActions('tasks', ['addTask']),
-    submitForm () {
-      this.$refs.taskInput.$refs.name.validate()
-      if (!this.$refs.taskInput.$refs.name.hasError) {
-        this.submitTask()
-      }
-    },
     submitTask () {
       this.addTask(this.taskToBeAdded)
       this.$emit('close')
-    },
-    clearDueDate () {
-      this.taskToBeAdded.dueTime = ''
-      this.taskToBeAdded.dueDate = ''
     }
-  },
-  components: {
-    'task-header': require('./../shared/modalHeader.vue').default,
-    'task-input': require('./../shared/modalTextInput.vue').default,
-    'task-due-date': require('./../shared/modalDueDate.vue').default,
-    'task-due-time': require('./../shared/modalDueTime.vue').default,
-    'modal-buttons': require('./../shared/modalButtons.vue').default
   }
 }
 </script>
